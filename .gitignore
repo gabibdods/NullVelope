@@ -1,2 +1,12 @@
+# https://github.com/gabibdods/NewRepositoryTemplate:
+*
+
+!.gitattributes
 !.gitignore
 !README.md
+!License/
+!License/LICENSE.md
+!License/NOTICE.md
+
+
+# particular repository ignores:

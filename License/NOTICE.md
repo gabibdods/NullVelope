@@ -1,7 +1,9 @@
-# ALL CODE FROM THIS AUTHOR IS FOR DISPLAY PURPOSES ONLY.
+All codebase is authored by Gabriel Oliveira da Silva (@github.com/gabibdods).
 
-## This repository is part of a personal portfolio.
+The source files are for display and showcase purposes only.
 
-## No contributions (pull requests, etc.) will be accepted.
+This repository is part of a personal portfolio found in its entierity at https://gabrieldigitprint.work.
 
-## Forking is disabled intentionally.
+No contributions (pull requests, etc.) will be accepted.
+
+Pull requests are not authorized. Forking is not permitted. This repository is for viewing purposes only.
