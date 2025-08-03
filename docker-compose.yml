@@ -1,0 +1,52 @@
+services:
+  smtp:
+    container_name: nvMT
+    build: ./smtp
+    ports:
+      - "25:25"
+    depends_on:
+      - fastapi
+      - redis
+    networks:
+      - nullvelope
+
+  redis:
+    container_name: nvDB
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--save", "60", "1"]
+    volumes:
+      - redis-data:/data
+    networks:
+      - nullvelope
+
+  fastapi:
+    container_name: nvAPI
+    build: ./fastapi
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    networks:
+      - nullvelope
+
+  vuejs:
+    container_name: nvVU
+    build: ./vuejs
+    ports:
+      - "5173:5173"
+
+  mailhog:
+    container_name: nvMH
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
+volumes:
+  redis-data:
+
+networks:
+  nullvelope:
+    driver: bridge
