@@ -1,0 +1,14 @@
+[semgrp]
+	description = "Enable GWEs & secret-leak Semgrep rules"
+
+	[[semgrep.passthrough]]
+		type = "git"
+		value = "https://gitlab.com/gitlab-org/security-products/semgrep-rules.git"
+		ref = "main"
+		subdir = "cwe"
+	
+	[[semgrep.passthrough]]
+		type = "git"
+		value = "https://gitlab.com/gitlab-org/security-products/semgrep-rules.git"
+		ref = "main"
+		subdir = "secrets"
