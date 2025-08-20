@@ -1,0 +1,8 @@
+fastapi                     #(fastapi, pydantic, pydantic_core, starlette, anyio, annotated_types, idna, sniffio, typing-extensions, typing_inspection)
+uvicorn[standard]           #(uvicorn, click, h11)
+aiosmtpd                    #(aiosmtpd, atpublic, attrs)
+pymongo                     #(pymongo, dnspython)
+python-multipart            #(python-multipart)
+email-validator             #(email-validator)
+pydantic
+pymongo

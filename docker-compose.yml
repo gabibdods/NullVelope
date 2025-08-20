@@ -1,52 +1,55 @@
 services:
-  smtp:
-    container_name: nvMT
-    build: ./smtp
-    ports:
-      - "25:25"
-    depends_on:
-      - fastapi
-      - redis
-    networks:
-      - nullvelope
+  nvdb:
+    container_name: nvdb
+    image: mongo:6
+    environment: ["MONGO_INITDB_DATABASE=nullvelope"]
+    volumes: ["./data/mongo:/data/lib"]
+    ports: ["27017:27017"]
+    restart: unless-stopped
+    networks: [gabibdods]
 
-  redis:
-    container_name: nvDB
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-    command: ["redis-server", "--save", "60", "1"]
-    volumes:
-      - redis-data:/data
-    networks:
-      - nullvelope
+  nvrl:
+    container_name: nvrl
+    build: ./relay
+    environment:
+      - MONGO_URL=mongodb://nvdb:27017
+      - MONGO_DB=nullvelope
+      - DOMAIN=nullvelope.local
+      - SMTP_LISTEN=0.0.0.0
+      - SMTP_PORT=1025
+      - API_PORT=8000
+      - MESSAGE_TTL_SECONDS=86400
+      - ADDRESS_TTL_SECONDS=43200
+      - CORS_ORIGINS=*
+    ports: ["1025:1025", "8000:8000"]
+    depends_on: [nvdb]
+    restart: unless-stopped
+    networks: [gabibdods]
 
-  fastapi:
-    container_name: nvAPI
-    build: ./fastapi
-    ports:
-      - "8000:8000"
-    depends_on:
-      - redis
-    networks:
-      - nullvelope
+  nvma:
+    container_name: nvma
+    build: ./mta
+    environment:
+      - RELAY_DOMAIN=nullvelope.local
+      - RELAY_ORIGIN=nullvelope.local
+      - SMTP_INGEST_HOST=nvrl
+      - SMTP_INGEST_PORT=1025
+      - MYHOSTNAME=mail.nullvelope.local
+    ports: ["25:25"]
+    depends_on: [nvrl]
+    restart: unless-stopped
+    networks: [gabibdods]
 
-  vuejs:
-    container_name: nvVU
+  nvvu:
+    container_name: nvvu
     build: ./vuejs
-    ports:
-      - "5173:5173"
-
-  mailhog:
-    container_name: nvMH
-    image: mailhog/mailhog
-    ports:
-      - "8025:8025"
-      - "1025:1025"
-
-volumes:
-  redis-data:
+    environment:
+      - VITE_API_BASE=http://localhost:8000
+    ports: ["5173:80"]
+    depends_on: [nvma]
+    restart: unless-stopped
+    networks: [gabibdods]
 
 networks:
-  nullvelope:
+  gabibdods:
     driver: bridge

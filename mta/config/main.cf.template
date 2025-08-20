@@ -1,0 +1,21 @@
+smtpd_banner = $myhostname ESMTP
+biff = no
+append_dot_mydomain = no
+
+inet_interfaces = all
+inet_protocols = ipv4
+
+myhostname = ${MYHOSTNAME}
+mydomain = ${RELAY_DOMAIN}
+myorigin = ${RELAY_ORIGIN}
+mydestination = 
+
+relay_domains = ${RELAY_DOMAIN}
+smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination
+
+transport_maps = hash:/etc/psotfix/transport
+mynetworks = 127.0.0.1/8
+
+local_recipient_maps = 
+unknown_local_recipient_reject_code = 550
+disable_vrfy_command = yes
