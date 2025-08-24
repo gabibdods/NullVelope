@@ -1,0 +1,43 @@
+services:
+  nvdb:
+    container_name: nvdb
+    image: mongo:6
+    env_file: [.env]
+    volumes: [mongo_data:/data/db]
+    expose: [27017]
+    restart: unless-stopped
+    networks: [gabibdods]
+
+  nvrl:
+    container_name: nvrl
+    build: ./relay
+    env_file: [.env]
+    expose: [1025, 8000]
+    depends_on: [nvdb]
+    restart: unless-stopped
+    networks: [gabibdods]
+
+  nvma:
+    container_name: nvma
+    build: ./mta
+    env_file: [.env]
+    expose: [25]
+    depends_on: [nvrl]
+    restart: unless-stopped
+    networks: [gabibdods]
+
+  nvvu:
+    container_name: nvvu
+    build: ./vuejs
+    env_file: [.env]
+    ports: [80]
+    depends_on: [nvma]
+    restart: unless-stopped
+    networks: [gabibdods]
+
+volumes:
+  mongo_data:
+
+networks:
+  gabibdods:
+    external: true

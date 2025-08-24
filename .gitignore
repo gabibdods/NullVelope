@@ -16,7 +16,7 @@
 
 # particular repository ignores:
 
-!docker-compose.yml
+!docker-compose.yaml
 
 !mta/
 !mta/docker-entrypoint.sh
@@ -45,6 +45,7 @@
 !vuejs/tsconfig.json
 !vuejs/tsconfig.node.json
 !vuejs/vite.config.ts
+!vuejs/vite.config.js
 
 !vuejs/.vscode/
 !vuejs/.vscode/extensions.json
@@ -57,6 +58,7 @@
 !vuejs/src/App.vue
 !vuejs/src/App.bkp.vue
 !vuejs/src/main.ts
+!vuejs/src/main.js
 !vuejs/src/style.css
 !vuejs/src/vite-env.d.ts
 
